@@ -4,8 +4,7 @@ wire [7:0] g, p, c;
 wire [35:0] e;
 wire cin;
 genvar i,j;
-//buf  (cin, 0);
-assign cin=1'b0;
+buf  (cin, 0);
 //c[0]
 and  (e[0], cin, p[0]);
 or  (c[0], e[0], g[0]);
@@ -67,18 +66,19 @@ and  (e[35], g[6], p[7]);
 or  (c[7], e[28], e[29], e[30], e[31], e[32], e[33], e[34], e[35], g[7]);
 
 xor  (sum[0],p[0],cin);
+
 generate for(i=1;i<8;i=i+1) begin: loop
 //xor  x[7:1](sum[7:1],p[7:1],c[6:0]);
 xor  x999(sum[7:1],p[7:1],c[i-1'b1]);
 end
 endgenerate
-//xor  x[7:1](sum[7:1],p[7:1],c[6:0]);
-//buf  (cout, c[7]);
-assign cout=c[7];
+
+buf  (cout, c[7]);
 
 generate for(j=0;j<8;j=j+1) begin: loop
+//PGGen pggen[7:0](g[7:0],p[7:0],a[7:0],b[7:0]);
 PGGen pggen999(g[j],p[j],a[j],b[j]);
 end
 endgenerate
-//PGGen pggen[7:0](g[7:0],p[7:0],a[7:0],b[7:0]);
+
 endmodule
